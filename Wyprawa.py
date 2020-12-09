@@ -3,6 +3,7 @@ import random
 import time
 import Przedmiot
 
+
 class Potwor:
     def __init__(self, nazwa, zycie, atak):
         self.nazwa = nazwa
@@ -49,29 +50,31 @@ def wyprawa(mojbohater: Bohater.Bohater):
         print("Atakuje:", potwor_latwy)
         potwor_latwy.zycie = random.randint(5, potwor_latwy.zycie)
 
-        while potwor_latwy.zycie > 0 and mojbohater.pkt_zycia > 0:       #zycie potwora wieksze od 0 i boh. wieksze od 0.
-            potw_atak = random.randint(1, potwor_latwy.atak)             #losuje jaka wartoscia uderzy potwor.
-            boh_atak = random.randint(1, mojbohater.pkt_ataku)           #losuje jaka wartoscia uderzy bohater.
-            boh_def = random.randint(1, mojbohater.pkt_obrony)           #losuje jaka wartosc zablokuje bohater.
-            potwor_latwy.zycie -= boh_atak                               #zadane obrazenia odejete od zycia potwora
+        while potwor_latwy.zycie > 0 and mojbohater.pkt_zycia > 0:       # zycie potwora wieksze od 0 i boh. wieksze od 0.
+            potw_atak = random.randint(1, potwor_latwy.atak)             # losuje jaka wartoscia uderzy potwor.
+            boh_atak = random.randint(1, mojbohater.pkt_ataku)           # losuje jaka wartoscia uderzy bohater.
+            boh_def = random.randint(1, mojbohater.pkt_obrony)           # losuje jaka wartosc zablokuje bohater.
+            potwor_latwy.zycie -= boh_atak                               # zadane obrazenia odejete od zycia potwora
             print("###" * 10)
-            print("Bohater: ", mojbohater.pkt_zycia, "życia.", "\nBohater atakuje: ", boh_atak)  #ile zycia ma bohater oraz ile zaatakuje
+            print("Bohater: ", mojbohater.pkt_zycia, "życia.", "\nBohater atakuje: ", boh_atak)  # ile zycia ma bohater oraz ile zaatakuje
             time.sleep(1)
-            print(potwor_latwy, ":", potwor_latwy.zycie, "zycia.")      #ilosc zycia potwora
-            print(potwor_latwy, "atakuje:", potw_atak)                 #zadane obrazenia potwora
-            print("Bohater blokuje tarcza: ", boh_def)                 #pokaze ile bohater blokuje
-            mojbohater.pkt_zycia -= potw_atak - boh_def                #od zycia bohatera odejmnie wartosc ataku pomniejszona wartoscia bloku bohatera
+            print(potwor_latwy, ":", potwor_latwy.zycie, "zycia.")     # ilosc zycia potwora
+            print(potwor_latwy, "atakuje:", potw_atak)                 # zadane obrazenia potwora
+            print("Bohater blokuje tarcza: ", boh_def)                 # pokaze ile bohater blokuje
+            mojbohater.pkt_zycia -= potw_atak - boh_def >= 0            # od zycia bohatera odejmnie wartosc ataku pomniejszona wartoscia bloku bohatera
             time.sleep(1)
 
         if potwor_latwy.zycie <= 0:
             print("\nPokonałeś:", potwor_latwy)
-            brylka = random.randint(0, 8)                   #szansa na otrzymanie bryłki
+            brylka = random.randint(0, 8)                   # szansa na otrzymanie bryłki
             if brylka == 2:
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
-            mojbohater.sakwa += 3                           #dodanie do sakwy w ramach nagrody
+            mojbohater.sakwa += 3                           # dodanie do sakwy w ramach nagrody
+            mojbohater.pkt_dosw += 5                        # bohater dostaje doswiadczenie
 
         else:
+            print("##############")
             print(potwor_latwy, "cie zabił")
 
     if wybor == 2:
@@ -100,8 +103,10 @@ def wyprawa(mojbohater: Bohater.Bohater):
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
             mojbohater.sakwa += 10
+            mojbohater.pkt_dosw += 15
 
         else:
+            print("##############")
             print(potwor_trudny, "cie zabił")
 
     if wybor == 3:
@@ -110,17 +115,17 @@ def wyprawa(mojbohater: Bohater.Bohater):
         potwor_trudny.zycie = random.randint(40, potwor_trudny.zycie)
 
         while potwor_trudny.zycie > 0 and mojbohater.pkt_zycia > 0:
-            potwor_trudny.atak = random.randint(8, potwor_trudny.atak + 3)
-            mojbohater.pkt_ataku = random.randint(1, mojbohater.pkt_ataku + 2)
-            mojbohater.pkt_obrony = random.randint(1, mojbohater.pkt_obrony + 1)
-            potwor_trudny.zycie -= mojbohater.pkt_ataku
+            potw_atak = random.randint(5, potwor_trudny.atak) + 3
+            boh_atak = random.randint(1, mojbohater.pkt_ataku)
+            boh_def = random.randint(1, mojbohater.pkt_obrony)
+            potwor_trudny.zycie -= boh_atak - 2
             print("###" * 10)
-            print("Bohater: ", mojbohater.pkt_zycia, "życia.", "\nBohater atakuje: ", mojbohater.pkt_ataku)
+            print("Bohater: ", mojbohater.pkt_zycia, "życia.", "\nBohater atakuje: ", boh_atak)
             time.sleep(1)
             print(potwor_trudny, ":", potwor_trudny.zycie, "zycia.")
-            print(potwor_trudny, "atakuje:", potwor_trudny.atak)
-            print("Bohater blokuje tarcza: ", mojbohater.pkt_obrony)
-            mojbohater.pkt_zycia -= potwor_trudny.atak - mojbohater.pkt_obrony
+            print(potwor_trudny, "atakuje:", potw_atak)
+            print("Bohater blokuje tarcza: ", boh_def)
+            mojbohater.pkt_zycia -= potwor_trudny.atak - boh_def
             time.sleep(1)
 
         if potwor_trudny.zycie <= 0:
@@ -130,6 +135,8 @@ def wyprawa(mojbohater: Bohater.Bohater):
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
             mojbohater.sakwa += 18
+            mojbohater.pkt_dosw += 20
 
         else:
+            print("##############")
             print(potwor_trudny, "cie zabił")

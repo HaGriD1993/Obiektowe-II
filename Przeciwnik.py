@@ -13,7 +13,7 @@ class Przeciwnik:
         self.pkt_zycia = 150
 
     def info(self):
-        print("Witaj nazywam się: " + self.imie)
+        print("Nazywam się: " + self.imie)
 
     def walka(self, mojbohater: Bohater.Bohater):
 
@@ -43,7 +43,7 @@ class Przeciwnik:
 
             if self.pkt_zycia <= 0:
                 print("Zabiłeś Lilith")
-                mojbohater.plecak.append("Korona Lilith")
+                mojbohater.plecak.append(Przedmiot.korona)
                 mojbohater.plecak.append(Przedmiot.brylka)
                 mojbohater.stan_pancerz = 1
                 mojbohater.stan_bron = 1
@@ -54,11 +54,6 @@ class Przeciwnik:
         elif mojbohater.stan_bron < 5 or mojbohater.stan_pancerz < 5:
             print("Powinieneś naprawić ekwipunek. Narzedzia można znaleść u Kowala.")
 
-
-        # if self.stan_bron and self.stan_pancerz >= 5:               #SPRAWDZAM STAN BRONI I PANCERZA
-        #     print("Ekwipunek w doskonałym stanie.")
-        # elif self.stan_bron < 5 or self.stan_pancerz < 5:
-        #     print("Powinieneś naprawić ekwipunek. Narzedzia można znaleść u Kowala.")
 
 
 

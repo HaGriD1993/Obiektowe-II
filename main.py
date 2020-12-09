@@ -31,16 +31,21 @@ if __name__ == "__main__":
 
     #Menu:
     while True:
+
         print("\n1. Bohater:      Informacje |Naprawa ekwipunku |Polowanie |Ognisko |Wyprawa |Inwentarz |Odpoczynek")
         print("2. Kowal:        Informacje |Kuźnia  |Sklepik")
         print("3. Alchemik:     Informacje |Rośliny |Mikstury")
-        print("4. Sanktuarium:  Walka z Lilith|")
+        print("4. Sanktuarium: ")
         print("5. Koniec gry.")
         wybor_1 = int(input("\nWybierz: "))
+
+
 
         #Bohater:
         if wybor_1 == 1:
             postac.info()
+            postac.awans()
+            postac.stan_zdrowia()
             print("\n1. Naprawa ekwipunku: ")
             print("2. Polowanie: ")
             print("3. Gotowanie: ")
@@ -72,11 +77,11 @@ if __name__ == "__main__":
         #Kowal
         if wybor_1 == 2:
             kowal.info()
-            print("\n1.Materiały i Rudy: ")
+            print("\n\n1.Materiały i Rudy: ")
             print("2.Przetopy: ")
             print("3.Sklep: ")
             print("4.Skup przedmiotów: ")
-            wybor_2 = int(input("Wybierz: "))
+            wybor_2 = int(input("\nWybierz: "))
             if wybor_2 == 1:
                 kowal.skladniki(postac)
             elif wybor_2 == 2:

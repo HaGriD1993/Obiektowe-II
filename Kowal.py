@@ -4,7 +4,7 @@ import Bohater
 import Przedmiot
 
 
-class Kowal():
+class Kowal:
     def __init__(self):
         self.imie = "Ryszard"
         self.wiek = 52
@@ -14,7 +14,7 @@ class Kowal():
         print("\nWitaj nazywam się: " + self.imie, ",jestem", self.specjanosc+"em")   #PRZEDSTAWIA SIE
 
     def skladniki(self, mojbohater: Bohater.Bohater):
-        metale = ["ruda Stali", " ruda Żelaza", "ruda Miedzi", "ruda Brązu", "ruda Niklu", "ruda Złota"]
+        metale = ["ruda Stali", "ruda Żelaza", "ruda Miedzi", "ruda Brązu", "ruda Niklu", "ruda Złota"]
         dodatki = ["Drewno", "Węgiel", "Świńska skóra", "Diament"]
 
         wyb_metale = random.sample(metale, k=3)                 #RANDOMOWE ELEMENTY Z LISTY
@@ -62,16 +62,20 @@ class Kowal():
         print("{} {}".format("2.|", "Pancerz: "))
         print("{} {}".format("3.|", "Tarcza: "))
         print("{} {}".format("4.|", "Hełm: "))
+        print("{} {}".format("5.|", "Pozostałe: "))
 
         miecze = []
         pancerz = []
         tarcza = []
         helm = []
+        pozostale = []
 
         for i in range(1):              # DODAJE PRZEDMIOTY DO KONKRETNYCH LIST.
             miecze.append(Przedmiot.miecz_zardzewialy)
             miecze.append(Przedmiot.miecz_zwykly)
             miecze.append(Przedmiot.miecz_doskonaly)
+            miecze.append(Przedmiot.miecz_stalowy)
+            miecze.append(Przedmiot.miecz_zelazny)
 
             pancerz.append(Przedmiot.pancerz_sierzanta)
             pancerz.append(Przedmiot.pancerz_straznika)
@@ -87,6 +91,10 @@ class Kowal():
             helm.append(Przedmiot.helm_zelazny)
             helm.append(Przedmiot.helm_rogaty)
 
+            pozostale.append(Przedmiot.kilof)
+            pozostale.append(Przedmiot.mlotek)
+            pozostale.append(Przedmiot.oselka)
+
         wybor = int(input("\nWybierz:"))              #WYBIERAMY KATEGORIE
         if wybor == 1:
             nr = 0
@@ -96,7 +104,7 @@ class Kowal():
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
-            wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(miecze[nr_przedmiotu])  #FUNKCJA ZWORCI CENE PRZEDMIOTU
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(miecze[nr_przedmiotu])  #FUNKCJA ZWORCI CENE PRZEDMIOTU
 
             if mojbohater.sakwa >= wartosc_przedmiotu:              #SPRAWDZA ILOSC MONET W SAKWIE DO CENY PRZEDMIOTU
                 print("Mam odpowiednią ilość monet.")               # JAK NAS STAC TO KUPUJE.
@@ -115,7 +123,7 @@ class Kowal():
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
-            wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(pancerz[nr_przedmiotu])
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(pancerz[nr_przedmiotu])
 
             if mojbohater.sakwa >= wartosc_przedmiotu:
                 print("Mam odpowiednią ilość monet.")
@@ -134,7 +142,7 @@ class Kowal():
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
-            wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(tarcza[nr_przedmiotu])
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(tarcza[nr_przedmiotu])
 
             if mojbohater.sakwa >= wartosc_przedmiotu:
                 print("Mam odpowiednią ilość monet.")
@@ -153,12 +161,31 @@ class Kowal():
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
-            wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(helm[nr_przedmiotu])
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(helm[nr_przedmiotu])
 
             if mojbohater.sakwa >= wartosc_przedmiotu:
-                print("Mam odpowiednią ilość monet.")
+                print("Kupiłeś: ", helm[nr_przedmiotu])
                 mojbohater.sakwa -= wartosc_przedmiotu
                 mojbohater.plecak.append(helm[nr_przedmiotu])
+                print("Zostało mi:", mojbohater.sakwa)
+            else:
+                print("\nMasz za mało pieniedzy.",
+                      "\nSakwa:", mojbohater.sakwa, "|Cena przedmiotu:", wartosc_przedmiotu)
+
+        elif wybor == 5:
+            nr = 0
+            for rzecz in pozostale:
+                nr += 1
+                print("Nr:", str(nr), rzecz, sep=" ")
+            kupiony = input("\nKtóry chcesz kupić: ")
+            nr_przedmiotu = int(kupiony)
+            nr_przedmiotu -= 1
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(pozostale[nr_przedmiotu])
+
+            if mojbohater.sakwa >= wartosc_przedmiotu:
+                print("Kupiłeś: ", pozostale[nr_przedmiotu])
+                mojbohater.sakwa -= wartosc_przedmiotu
+                mojbohater.plecak.append(pozostale[nr_przedmiotu])
                 print("Zostało mi:", mojbohater.sakwa)
             else:
                 print("\nMasz za mało pieniedzy.",
@@ -200,7 +227,7 @@ class Kowal():
         sprzedany = input("Wybierz numer przedmiotu: ")
         nr_sprzedany = int(sprzedany)
         nr_sprzedany -= 1
-        wartosc_przedmiotu = Przedmiot.Zwykly.kupno(mojbohater.plecak[nr_sprzedany])
+        wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(mojbohater.plecak[nr_sprzedany])
         print("Chcesz sprzedać za: ", wartosc_przedmiotu)
         wybor = input("T/N: ")
 
