@@ -18,9 +18,16 @@ class Bohater:
         self.pkt_dosw = 0
         self.poziom = 1
 
-    def info(self):
-        if self.pkt_zycia >= self.pkt_maxzycia:
+    def mininfo(self):
+
+        if self.pkt_zycia > self.pkt_maxzycia:   # ZEBY POSTAC NIE MIALA WIECEJ ZYCIA NIZ MOZE.
             self.pkt_zycia = self.pkt_maxzycia
+
+        print("\nPoziom:", self.poziom)
+        print("Punkty życia:", self.pkt_zycia, "/", self.pkt_maxzycia)
+        print("Sakwa:", self.sakwa)
+
+    def status(self):
 
         print("________" * 3)
         print("Imie:", self.imie, "\nKlasa:", self.specjalnosc,
@@ -35,25 +42,23 @@ class Bohater:
         print("________" * 3)
 
     def awans(self):
-        if self.pkt_dosw >= 10:
-            self.poziom += 1
-            self.pkt_dosw -= 10
-            self.pkt_maxzycia += 5
-            self.pkt_ataku += 2
+
+        if self.pkt_dosw >= 10:     # AWANS NA KOLEJNY POZIOM PO UZYSKANIU 10 PKT DOSWIACZENIA
+            self.poziom += 1        # POZIOM +1
+            self.pkt_dosw -= 10     # DOWSWIADCZENIE - 10
+            self.pkt_maxzycia += 5   # WZROST MAX ZYCIA O 5 PKT
+            self.pkt_ataku += 2       # WZROST ATAKU O 2 PKT
             print("#################")
             print("Awansowałeś !!!\nNa poziom: ", self.poziom)
             print("#################")
 
     def stan_zdrowia(self):
-        if self.pkt_zycia <= 20:
+        if self.pkt_zycia <= 20:  # SPRAWDZA PUNKTY ZYCIA JAK PONIZEJ 20PKT WYSWIETLI KOMUNIKAT
             print("######################")
             print("Masz mało życia. \nUdaj sie na odpoczynek.\n", self.pkt_zycia, "/", self.pkt_maxzycia)
             print("#######################")
             if self.pkt_zycia < 0:
                 self.pkt_zycia = 0
-
-
-
 
     def sprawdzplecak(self):
         if len(self.plecak) == 0:                       # SPRAWDZA CZY W PLECAKU COS JEST
@@ -70,15 +75,15 @@ class Bohater:
               "\npancerz:", self.stan_pancerz, "|| broń:", self.stan_bron)
         print("#######" * 5)
 
-        if self.stan_bron and self.stan_pancerz >= 5:               # SPRAWDZAM STAN BRONI I PANCERZA
+        if self.stan_bron and self.stan_pancerz >= 5:              # SPRAWDZA STAN BRONI I PANCERZA
             print("Ekwipunek w doskonałym stanie.")
         elif self.stan_bron < 5 or self.stan_pancerz < 5:
             print("Powinieneś naprawić ekwipunek. Narzedzia można znaleść u Kowala.")
 
-        if Przedmiot.mlotek in self.plecak:                    # SPRAWDZA CZY W PLECAKU JEST MŁOTEK
+        if Przedmiot.mlotek in self.plecak:                     # SPRAWDZA CZY W PLECAKU JEST MŁOTEK
             print("Naprawiam pancerz.")
             time.sleep(1)
-            while self.stan_pancerz < 5:                       # PODNOSI STAN PANCERZA DO 5
+            while self.stan_pancerz < 5:                        # PODNOSI STAN PANCERZA DO 5
                 time.sleep(3)
                 self.stan_pancerz += 1
                 print("stan:", self.stan_pancerz)
@@ -86,7 +91,7 @@ class Bohater:
                 if self.stan_pancerz == 5:
                     print("#######" * 5)
                     print("Naprawiłem.")
-                    self.plecak.remove(Przedmiot.mlotek)        # USUWA MLOTEK Z PLECAKA
+                    self.plecak.remove(Przedmiot.mlotek)            # USUWA MLOTEK Z PLECAKA
         else:
             print("Nie mam wymaganych narzedzi do naprawy pancerza.")
 
@@ -101,7 +106,7 @@ class Bohater:
                 if self.stan_bron == 5:
                     print("#######" * 5)
                     print("Naprawiłem.")
-                    self.plecak.remove(Przedmiot.oselka)        #USUWA OSEŁKE Z PLECAKA
+                    self.plecak.remove(Przedmiot.oselka)        # USUWA OSEŁKE Z PLECAKA
         else:
             print("Nie mam wymaganych narzedzi do ostrzenia broni.")
 
@@ -113,6 +118,7 @@ class Bohater:
         zw_las = ["Sarna", "Królik", "Wilk"]
         zw_bagna = ["Kaczka", "Gęś", "Czapla"]
         zw_czesci = []
+
         for i in range(1):
             zw_czesci.append(Przedmiot.mieso)
             zw_czesci.append(Przedmiot.skora)
@@ -129,12 +135,13 @@ class Bohater:
             print("Znalazłem ślady: ", zwierze)
             szansa_zwierze = random.randint(0, 2)
 
-            if szansa_zwierze == 2:                                     #SZANSA NA UPOLOWANIE.
+            if szansa_zwierze == 2:                                     # SZANSA NA UPOLOWANIE.
                 time.sleep(3)
                 print("Udało mi sie upolować", zwierze)
                 time.sleep(3)
-                self.plecak.append(random.choice(zw_czesci))            #DODAJE DO PLECAKA 2-ELEMENTY
+                self.plecak.append(random.choice(zw_czesci))            # DODAJE DO PLECAKA 2 ELEMENTY
                 self.plecak.append(random.choice(zw_czesci))
+
             else:
                 time.sleep(2)
                 print(zwierze, "uciekło.", "\nNic nie upolowałem.")
@@ -144,35 +151,37 @@ class Bohater:
             time.sleep(3)
             zwierze = random.choice(zw_bagna)
             szansa_zwierze = random.randint(0, 2)
-            if szansa_zwierze == 2:                                     #SZANSA NA UPOLOWANIE.
+
+            if szansa_zwierze == 2:                                     # SZANSA NA UPOLOWANIE.
                 time.sleep(3)
                 print("Udało mi sie upolować", zwierze)
                 time.sleep(3)
-                self.plecak.append(random.choice(zw_czesci))  # DODAJE DO PLECAKA 2-ELEMENTY
+                self.plecak.append(random.choice(zw_czesci))            # DODAJE DO PLECAKA 2 ELEMENTY
                 self.plecak.append(random.choice(zw_czesci))
+
             else:
                 time.sleep(2)
-                print(zwierze, "uciekło.", "\nNic nie upolowałem.")
+                print("Zwierze uciekło.")
 
     def ognisko(self):
         print("Do przygotowania 'potrawki', będziesz potrzebował 'mięsa' oraz 'wątroby'.")
 
-        if Przedmiot.mieso and Przedmiot.watroba in self.plecak:
+        if Przedmiot.mieso and Przedmiot.watroba in self.plecak:     # SPRAWDZA WARUNEK
             print("W plecaku sa składniki na 'potrawke'.")
             print("\nAby rozpalić ognisko będę potrzebował drewna.")
 
-            if Przedmiot.mieso in self.plecak:
+            if Przedmiot.mieso in self.plecak:      # JAK PRZEDMIOT JEST TO USUWA
                 self.plecak.remove(Przedmiot.mieso)
             if Przedmiot.watroba in self.plecak:
                 self.plecak.remove(Przedmiot.watroba)
 
-            self.plecak.append(Przedmiot.potrawka)
+            self.plecak.append(Przedmiot.potrawka)   # DODAJE PRZEDMIOT DO PLECAKA
 
             drewno = 0
             time.sleep(2)
             print("Szukam drewna.")
 
-            while drewno < 3:
+            while drewno < 3:    # DODAJE PRZEDMIOT DOPUKI NIE BEDZIE MIAL 3
                 time.sleep(2)
                 print("znalazłem 'kawałek drewna'.")
                 time.sleep(1)
@@ -195,8 +204,10 @@ class Bohater:
             if Przedmiot.patyki in self.plecak:                 # SPRAWDZA KAWAŁEK DREWNA W PLECAKU, JAK JEST TO USUWA.
                 while Przedmiot.patyki in self.plecak:
                     self.plecak.remove(Przedmiot.patyki)
+
             else:
                 print("Nie mam już drewna.")
+
         else:
             print("W plecaku nie ma skladników na 'potrawke'. Udaj sie na Polowanie.")
 
@@ -211,29 +222,42 @@ class Bohater:
         odpoczynek = input("Chcesz odpocząc: (T/N): ")           # ODNOWIENIE ZYCIA (ODPOCZYNEK)
 
         if odpoczynek == str("T"):
-            time.sleep(5)
             print("Odpoczywasz.")
             self.pkt_zycia += 50
+            for i in range(5):
+                time.sleep(1)
+                print("życie +10")
+
         else:
             print("Może innym razem.")
 
         if Przedmiot.potrawka in self.plecak:
             zjesc = input("Zjeść potrawkę, |życie + 80|. [T/N]?: ")        # ODNOWIENIE ZYCIA (POTRAWKA)
+
             if zjesc == str("T"):
                 self.plecak.remove(Przedmiot.potrawka)
                 self.pkt_zycia += 80
+                print("życie +80")
+
             if zjesc == str("N"):
                 print("Zostawiam na pozniej.")
 
     def gornictwo(self):
-        rudy_metali = ["ruda Stali", " ruda Żelaza", "ruda Miedźi", "ruda Brązu", "ruda Niklu", "ruda Złota"]
+        rudy_metali = []
 
-        if Przedmiot.kilof in self.plecak:
-            print("Szukam złóż: ")
+        for i in range(1):                              # DODANIE DO LISTY
+            rudy_metali.append(Przedmiot.ruda_zelaza)
+            rudy_metali.append(Przedmiot.ruda_miedzi)
+            rudy_metali.append(Przedmiot.ruda_brazu)
+            rudy_metali.append(Przedmiot.ruda_niklu)
+            rudy_metali.append(Przedmiot.ruda_zlota)
+            rudy_metali.append(Przedmiot.ruda_srebra)
+
+        if Przedmiot.kilof in self.plecak:              # SPRAWDZA CZY PRZEDMIOT JEST W PLECAKU
+            print("\nSzukam złóż: ")
             time.sleep(5)
-            ruda = random.choice(rudy_metali)
+            ruda = random.choice(rudy_metali)           # WYBIERA DOWOLNA WARTOSC Z LISTY
             szansa = random.randint(0, 4)
-            print(szansa, "moja szansa")
             time.sleep(1)
             print("Zanalazłem:", ruda)
 
@@ -247,39 +271,43 @@ class Bohater:
                 time.sleep(2)
                 self.plecak.append(ruda)
                 self.plecak.append(Przedmiot.brylka)
+
             elif szansa == 3:
                 print("Wydobyłem: ", ruda)
                 time.sleep(2)
                 print("udało sie jeszcze wydobyć: 'ołów'")
                 self.plecak.append(ruda)
                 self.plecak.append(Przedmiot.olow)
+
             else:
                 time.sleep(2)
                 print("Nic nie wydobyłem.")
+
         else:
-            print("Nie mam narzedzia do wydobycia. \nNarzedzia możesz znaleść u Kowala.")
+            print("Potrzebuje kilof. Możesz go znaleść u Kowala.")
 
     def wymiana(self):
-        print("\nZa 30 monet możesz dostać: 1x 'bryłka złota \nlub wymienić 'bryłke złota' na 30 monet.")
-        print("1.Wymiana monet na 'bryłke złota'")
-        print("2.Wymiana 'bryłka złota' na monety")
+
+        print("\n1. Monety ===> 'bryłka złota'.")
+        print("2. Monety <=== 'bryłka złota'.")
 
         wybor = int(input("\nWybierz: "))
+
         if wybor == 1:
-            if self.sakwa >= 1:
-                self.plecak.append(Przedmiot.brylka)
-                self.sakwa -= 1
+
+            if self.sakwa >= 30:                       # 30 LUB WIECEJ MONET W SAKWIE
+                self.plecak.append(Przedmiot.brylka)   # DODAJE BRYlKE
+                self.sakwa -= 30                       # USUWA 30 MONET
                 print("Otrzymujesz 'bryłka złota'")
                 print("W sakiewce zostało ci: ", self.sakwa, "monet")
 
         if wybor == 2:
-            if Przedmiot.brylka in self.plecak:
-                self.plecak.remove(Przedmiot.brylka)
-                self.sakwa += 30
+
+            if Przedmiot.brylka in self.plecak:         # JAK JEST BRYLKA W PLECAKU
+                self.plecak.remove(Przedmiot.brylka)    # USUWA BRYLKE
+                self.sakwa += 30                        # DO SAKWY PLUS 30 MONET
                 print("Do sakiewki dodano 30 monet.")
                 print("W plecaku zostało ci: ", self.plecak.count(Przedmiot.brylka), "bryłek")
-        else:
-            print("Posiadasz:", self.sakwa, "monet", "\nIlość bryłek: ", self.plecak.count(Przedmiot.brylka))
 
 
 class Wojownik(Bohater):
@@ -288,7 +316,7 @@ class Wojownik(Bohater):
         self.plecak = []
         self.stan_pancerz = random.randint(0, 2)
         self.stan_bron = random.randint(1, 3)
-        self.sakwa = int(500)
+        self.sakwa = int(17)
         self.pkt_dosw = 0
 
 
@@ -298,7 +326,7 @@ class Lotrzyk(Bohater):
         self.plecak = []
         self.stan_pancerz = random.randint(0, 3)
         self.stan_bron = random.randint(0, 4)
-        self.sakwa = int(0)
+        self.sakwa = int(25)
         self.pkt_dosw = 0
 
 
@@ -308,5 +336,5 @@ class Driud(Bohater):
         self.plecak = []
         self.stan_pancerz = random.randint(2, 3)
         self.stan_bron = random.randint(2, 3)
-        self.sakwa = int(0)
+        self.sakwa = int(22)
         self.pkt_dosw = 0

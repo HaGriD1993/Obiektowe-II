@@ -14,46 +14,107 @@ class Kowal:
         print("\nWitaj nazywam się: " + self.imie, ",jestem", self.specjanosc+"em")   #PRZEDSTAWIA SIE
 
     def skladniki(self, mojbohater: Bohater.Bohater):
-        metale = ["ruda Stali", "ruda Żelaza", "ruda Miedzi", "ruda Brązu", "ruda Niklu", "ruda Złota"]
-        dodatki = ["Drewno", "Węgiel", "Świńska skóra", "Diament"]
+        metale = []
 
-        wyb_metale = random.sample(metale, k=3)                 #RANDOMOWE ELEMENTY Z LISTY
-        wyb_dodatki = random.sample(dodatki, k=2)               #RANDOMOWE ELEMENTY Z LISTY
+        for i in range(1):                                  # DODANIE DO LISTY
+            metale.append(Przedmiot.ruda_zelaza)
+            metale.append(Przedmiot.ruda_miedzi)
+            metale.append(Przedmiot.ruda_brazu)
+            metale.append(Przedmiot.ruda_niklu)
+            metale.append(Przedmiot.ruda_zlota)
+            metale.append(Przedmiot.ruda_srebra)
 
-        if Przedmiot.brylka in mojbohater.plecak:               #SPRAWDZA CZY MA BRYŁKE W PLECAKU
-            wybor = input("Za 'bryłke złota' mogę dać ci kilka metali. (T/N): ")
-            if wybor == str("T"):
-                print("Za bryłke otrzymujesz: ")
-                mojbohater.plecak.remove(Przedmiot.brylka)      #USUWA BRYŁKE Z PLECAKA
-                print(wyb_metale)
-                mojbohater.plecak.extend(wyb_metale)        #DODAJE DO PLECAKA Z LISTY METALI
-                time.sleep(2)
-                print("Dostajesz również: ", wyb_dodatki)
-                mojbohater.plecak.extend(wyb_dodatki)      #DODAJE DO PLECAKA Z LISTY DODATKÓW
+        wybor = input("Za 'bryłke złota' mogę dać ci kilka róznych rud. (T/N): ")
 
-            if wybor == str("N"):
-                print("Wróć jak zmienisz zdanie.")
+        if wybor == str("T"):
+
+            if Przedmiot.brylka in mojbohater.plecak:        # SPRAWDZA CZY JEST BRYLKA
+                mojbohater.plecak.remove(Przedmiot.brylka)
+
+                print("Otrzymujesz: ")
+
+                for i in range(3):                            # DO PLECAKA DODAJE 3 ELEMENTY Z LISTY
+                    time.sleep(2)
+                    wyb_metale = random.choice(metale)
+                    print(wyb_metale.__str__())
+                    mojbohater.plecak.append(wyb_metale)
+
+            else:
+                print("Nie masz ani jednej 'bryłki złota', wróc do mnie jak bedziesz miał.")
+
         else:
-            print("Nie masz 'bryłki złota'. Wróć jak znajdziesz.")    #JAK NIE MA BRYŁKI TO KONIEC
+            print("Wróc jak zmienisz zdanie.")
 
     def przetapianie(self, mojbohater: Bohater.Bohater):
-        metale_lista = ["ruda Stali", " ruda Żelaza", "ruda Miedźi", "ruda Brązu", "ruda Niklu", "ruda Złota"]
 
-        if Przedmiot.brylka in mojbohater.plecak:
-            wybor = input("Za 'bryłke złota' mogę przetopię metal w sztabke.(T/N): ")
-            if wybor == str("T"):
-                mojbohater.plecak.remove(Przedmiot.brylka)
-                for metal in metale_lista:                   #SPRAWDZA CZY Z ELEMENTY Z LISTY METALI SA W PLECAKU
-                    if metal in mojbohater.plecak:
-                        print("Ten metal moge przetopić: ", metal)
-                        wybor_metal = input("Czy przetopic: (T/N): ")
-                        if wybor_metal == str("T"):
-                            mojbohater.plecak.remove(metal)                        #USUWA METAL Z PLECAKA, DODAJE SZTABKE
-                            mojbohater.plecak.append(str("sztabka ") + metal[5:])  #USUNIE Z METALU 'RUDE'
-                        else:
-                            print("Może poźniej.")
-                else:
-                    print("Nie masz nic do przetopienia.")
+        metale = []
+        sztabki = []
+
+        for i in range(1):                              # DODANIE DO POSZCZEGOLNYCH LIST
+            metale.append(Przedmiot.ruda_zelaza)
+            metale.append(Przedmiot.ruda_miedzi)
+            metale.append(Przedmiot.ruda_brazu)
+            metale.append(Przedmiot.ruda_niklu)
+            metale.append(Przedmiot.ruda_zlota)
+            metale.append(Przedmiot.ruda_srebra)
+
+            sztabki.append(Przedmiot.sz_zelaza)
+            sztabki.append(Przedmiot.sz_miedzi)
+            sztabki.append(Przedmiot.sz_brazu)
+            sztabki.append(Przedmiot.sz_niklu)
+            sztabki.append(Przedmiot.sz_zlota)
+            sztabki.append(Przedmiot.sz_srebra)
+
+        for metal in metale:         # SPRAWDZA ILOSC RUD METALI W PLECAKU
+            x = mojbohater.plecak.count(metal)
+            print("ilość:", x, "|", metal.__str__())
+
+        for metal in metale:
+            x = mojbohater.plecak.count(metal)
+
+            if x >= 3:                  # JAK JEST 3 LUB WIECEJ WTEDY USUWA 3 SZT I DAJE JEDNA SZTABKE .
+
+                if metal == Przedmiot.ruda_zelaza:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_zelaza)
+                    mojbohater.plecak.append(Przedmiot.sz_zelaza)
+                    print("Otrzymujesz:", Przedmiot.sz_zelaza.__str__())
+
+                if metal == Przedmiot.ruda_miedzi:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_miedzi)
+                    mojbohater.plecak.append(Przedmiot.sz_miedzi)
+                    print("Otrzymujesz:", Przedmiot.sz_miedzi.__str__())
+
+                if metal == Przedmiot.ruda_brazu:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_brazu)
+                    mojbohater.plecak.append(Przedmiot.sz_brazu)
+                    print("Otrzymujesz:", Przedmiot.sz_brazu.__str__())
+
+                if metal == Przedmiot.ruda_niklu:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_niklu)
+                    mojbohater.plecak.append(Przedmiot.sz_niklu)
+                    print("Otrzymujesz:", Przedmiot.sz_niklu.__str__())
+
+                if metal == Przedmiot.ruda_zlota:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_zlota)
+                    mojbohater.plecak.append(Przedmiot.sz_zlota)
+                    print("Otrzymujesz:", Przedmiot.sz_zlota.__str__())
+
+                if metal == Przedmiot.ruda_srebra:
+
+                    for i in range(3):
+                        mojbohater.plecak.remove(Przedmiot.ruda_srebra)
+                    mojbohater.plecak.append(Przedmiot.sz_srebra)
+                    print("Otrzymujesz:", Przedmiot.sz_srebra.__str__())
 
     def handel(self, mojbohater: Bohater.Bohater):
 
@@ -70,7 +131,7 @@ class Kowal:
         helm = []
         pozostale = []
 
-        for i in range(1):              # DODAJE PRZEDMIOTY DO KONKRETNYCH LIST.
+        for i in range(1):                          # DODAJE PRZEDMIOTY DO KONKRETNYCH LIST.
             miecze.append(Przedmiot.miecz_zardzewialy)
             miecze.append(Przedmiot.miecz_zwykly)
             miecze.append(Przedmiot.miecz_doskonaly)
@@ -95,31 +156,37 @@ class Kowal:
             pozostale.append(Przedmiot.mlotek)
             pozostale.append(Przedmiot.oselka)
 
-        wybor = int(input("\nWybierz:"))              #WYBIERAMY KATEGORIE
+        wybor = int(input("\nWybierz: "))              # WYBIERAMY KATEGORIE
+
         if wybor == 1:
             nr = 0
-            for rzecz in miecze:                    #POKAZE PRZEDMIOTY ZACZYNAJAC OD 1.
+
+            for rzecz in miecze:                     # POKAZE PRZEDMIOTY ZACZYNAJAC OD 1.
                 nr += 1
                 print("Nr:", str(nr), rzecz, sep=" ")
+
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
-            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(miecze[nr_przedmiotu])  #FUNKCJA ZWORCI CENE PRZEDMIOTU
+            wartosc_przedmiotu = Przedmiot.Zwykly.kupno(miecze[nr_przedmiotu])
 
-            if mojbohater.sakwa >= wartosc_przedmiotu:              #SPRAWDZA ILOSC MONET W SAKWIE DO CENY PRZEDMIOTU
+            if mojbohater.sakwa >= wartosc_przedmiotu:              # SPRAWDZA ILOSC MONET W SAKWIE DO CENY PRZEDMIOTU
                 print("Mam odpowiednią ilość monet.")               # JAK NAS STAC TO KUPUJE.
                 mojbohater.sakwa -= wartosc_przedmiotu
                 mojbohater.plecak.append(miecze[nr_przedmiotu])
                 print("Zostało mi:", mojbohater.sakwa)
+
             else:
-                print("\nMasz za mało pieniedzy.",                  #JAK NIE STAC TO ZWRACA SAKWE I CENE PRZEDMIOTU
+                print("\nMasz za mało pieniedzy.",                  # JAK NIE STAC TO ZWRACA SAKWE I CENE PRZEDMIOTU
                       "\nSakwa:", mojbohater.sakwa, "|Cena przedmiotu:", wartosc_przedmiotu)
 
         elif wybor == 2:
             nr = 0
+
             for rzecz in pancerz:
                 nr += 1
                 print("Nr:", str(nr), rzecz, sep=" ")
+
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
@@ -130,15 +197,18 @@ class Kowal:
                 mojbohater.sakwa -= wartosc_przedmiotu
                 mojbohater.plecak.append(pancerz[nr_przedmiotu])
                 print("Zostało mi:", mojbohater.sakwa)
+
             else:
                 print("\nMasz za mało pieniedzy.",
                       "\nSakwa:", mojbohater.sakwa, "|Cena przedmiotu:", wartosc_przedmiotu)
 
         elif wybor == 3:
             nr = 0
+
             for rzecz in tarcza:
                 nr += 1
                 print("Nr:", str(nr), rzecz, sep=" ")
+
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
@@ -155,9 +225,11 @@ class Kowal:
 
         elif wybor == 4:
             nr = 0
+
             for rzecz in helm:
                 nr += 1
                 print("Nr:", str(nr), rzecz, sep=" ")
+
             kupiony = input("\nKtóry chcesz kupić: ")
             nr_przedmiotu = int(kupiony)
             nr_przedmiotu -= 1
@@ -168,12 +240,14 @@ class Kowal:
                 mojbohater.sakwa -= wartosc_przedmiotu
                 mojbohater.plecak.append(helm[nr_przedmiotu])
                 print("Zostało mi:", mojbohater.sakwa)
+
             else:
                 print("\nMasz za mało pieniedzy.",
                       "\nSakwa:", mojbohater.sakwa, "|Cena przedmiotu:", wartosc_przedmiotu)
 
         elif wybor == 5:
             nr = 0
+
             for rzecz in pozostale:
                 nr += 1
                 print("Nr:", str(nr), rzecz, sep=" ")
@@ -187,6 +261,7 @@ class Kowal:
                 mojbohater.sakwa -= wartosc_przedmiotu
                 mojbohater.plecak.append(pozostale[nr_przedmiotu])
                 print("Zostało mi:", mojbohater.sakwa)
+
             else:
                 print("\nMasz za mało pieniedzy.",
                       "\nSakwa:", mojbohater.sakwa, "|Cena przedmiotu:", wartosc_przedmiotu)
@@ -196,6 +271,7 @@ class Kowal:
         print("Stan pancerza: {}, Stan broni {}".format(mojbohater.stan_pancerz, mojbohater.stan_bron))
 
         wybor = str(input("Czy chcesz dokonać naprawy: (T/N)"))
+
         if wybor == "T":
             if Przedmiot.brylka in mojbohater.plecak:           #SPRAWDZA CZY JEST BRYŁKA
                 print("Naprawiam:")
@@ -205,35 +281,41 @@ class Kowal:
                     time.sleep(2)
                     mojbohater.stan_pancerz += 1
                     print("+", mojbohater.stan_pancerz)
+
                 print("Pancerz: ", mojbohater.stan_pancerz)
 
                 while mojbohater.stan_bron < 5:
                     time.sleep(2)
                     mojbohater.stan_bron += 1
                     print("+", mojbohater.stan_bron)
+
                 print("Broń: ", mojbohater.stan_bron)
 
             else:
                 print("Nie masz 'bryłki złota', ilość:", mojbohater.plecak.count(Przedmiot.brylka))
+
         else:
             print("Wróć jak zmienisz zdanie.")
 
     def skup(self, mojbohater: Bohater.Bohater):
         print("Tutaj możesz sprzedać mi kilka twoich rzeczy: ")
         nr = 0
+
         for rzecz in mojbohater.plecak:
             nr += 1
             print("Nr:", str(nr), rzecz, sep=" ")
+
         sprzedany = input("Wybierz numer przedmiotu: ")
         nr_sprzedany = int(sprzedany)
         nr_sprzedany -= 1
         wartosc_przedmiotu = Przedmiot.Zwykly.sprzedaz(mojbohater.plecak[nr_sprzedany])
         print("Chcesz sprzedać za: ", wartosc_przedmiotu)
+
         wybor = input("T/N: ")
 
         if wybor == "T":
             mojbohater.plecak.remove(mojbohater.plecak[nr_sprzedany])
             mojbohater.sakwa += wartosc_przedmiotu
+
         else:
             print("Wróc jak zmienisz zdanie.")
-

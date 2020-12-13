@@ -3,6 +3,7 @@ import Bohater
 import time
 import Przedmiot
 
+
 class Przeciwnik:
     def __init__(self):
         self.imie = "Lilith - Matka Sanktuarium"

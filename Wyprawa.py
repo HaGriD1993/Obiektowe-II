@@ -21,14 +21,14 @@ def wyprawa(mojbohater: Bohater.Bohater):
     latwe_potwory = []
     trudne_potwory = []
 
-    dzik = Potwor("Dzik", 15, 7)
-    waz = Potwor("Wąż", 10, 5)
+    dzik = Potwor("Dzik", 15, 5)
+    waz = Potwor("Wąż", 10, 3)
     orzel = Potwor("Orzeł", 12, 4)
-    jelen = Potwor("Jeleń", 10, 5)
-    niedzwiedz_b = Potwor("Niedzwiedz Brunatny", 75, 12)
-    niedzwiedz_s = Potwor("Niedzwiedz Szary", 70, 18)
-    wilk_s = Potwor("Wilk Szary", 45, 13)
-    wilk_cz = Potwor("Wilk Czarny", 50, 12)
+    jelen = Potwor("Jeleń", 10, 4)
+    niedzwiedz_b = Potwor("Niedzwiedz Brunatny", 75, 10)
+    niedzwiedz_s = Potwor("Niedzwiedz Szary", 70, 14)
+    wilk_s = Potwor("Wilk Szary", 45, 11)
+    wilk_cz = Potwor("Wilk Czarny", 50, 9)
 
     for i in range(1):
         latwe_potwory.append(dzik)
@@ -61,15 +61,21 @@ def wyprawa(mojbohater: Bohater.Bohater):
             print(potwor_latwy, ":", potwor_latwy.zycie, "zycia.")     # ilosc zycia potwora
             print(potwor_latwy, "atakuje:", potw_atak)                 # zadane obrazenia potwora
             print("Bohater blokuje tarcza: ", boh_def)                 # pokaze ile bohater blokuje
-            mojbohater.pkt_zycia -= potw_atak - boh_def >= 0            # od zycia bohatera odejmnie wartosc ataku pomniejszona wartoscia bloku bohatera
-            time.sleep(1)
+            zadane_obrPotw = potw_atak - boh_def
+
+            if zadane_obrPotw < 0:      # JAK BEDA OBRAZENIA UJEMNE WTEDY ZMIENIA NA 0
+                zadane_obrPotw = 0
+
+            mojbohater.pkt_zycia -= zadane_obrPotw
 
         if potwor_latwy.zycie <= 0:
             print("\nPokonałeś:", potwor_latwy)
             brylka = random.randint(0, 8)                   # szansa na otrzymanie bryłki
+
             if brylka == 2:
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
+
             mojbohater.sakwa += 3                           # dodanie do sakwy w ramach nagrody
             mojbohater.pkt_dosw += 5                        # bohater dostaje doswiadczenie
 
@@ -93,15 +99,21 @@ def wyprawa(mojbohater: Bohater.Bohater):
             print(potwor_trudny, ":", potwor_trudny.zycie, "zycia.")
             print(potwor_trudny, "atakuje:", potw_atak)
             print("Bohater blokuje tarcza: ", boh_def)
-            mojbohater.pkt_zycia -= potwor_trudny.atak - boh_def
-            time.sleep(1)
+            zadane_obrPotw = potw_atak - boh_def
+
+            if zadane_obrPotw < 0:
+                zadane_obrPotw = 0
+
+            mojbohater.pkt_zycia -= zadane_obrPotw
 
         if potwor_trudny.zycie <= 0:
             print("\nPokonałeś:", potwor_trudny)
             brylka = random.randint(0, 5)
+
             if brylka == 1:
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
+
             mojbohater.sakwa += 10
             mojbohater.pkt_dosw += 15
 
@@ -125,15 +137,23 @@ def wyprawa(mojbohater: Bohater.Bohater):
             print(potwor_trudny, ":", potwor_trudny.zycie, "zycia.")
             print(potwor_trudny, "atakuje:", potw_atak)
             print("Bohater blokuje tarcza: ", boh_def)
-            mojbohater.pkt_zycia -= potwor_trudny.atak - boh_def
+            zadane_obrPotw = potw_atak - boh_def
+
+            if zadane_obrPotw < 0:
+                zadane_obrPotw = 0
+
+            mojbohater.pkt_zycia -= zadane_obrPotw
+
             time.sleep(1)
 
         if potwor_trudny.zycie <= 0:
             print("\nPokonałeś:", potwor_trudny)
             brylka = random.randint(0, 3)
+
             if brylka == 1:
                 mojbohater.plecak.append(Przedmiot.brylka)
                 print("Otrzymujesz 'bryłke złota'")
+
             mojbohater.sakwa += 18
             mojbohater.pkt_dosw += 20
 
